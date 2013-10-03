@@ -20,3 +20,12 @@ maximum(X, Y, Y) :-
 alt_min(X, Y, Z) :-
     peano_plus(Y, Z, X).
 
+deel(_, nul, _, _) :-
+    write('Wie deelt door nul is een snul :p'),
+    !.
+deel(X, Y, nul, X) :-
+    groter_dan(Y, X).
+deel(X, Y, s(D), R) :-
+    min(X, Y, Z),
+    deel(Z, Y, D, R).
+    
