@@ -11,5 +11,10 @@ listlength([_|Rest], Acc, Length) :-
     listlength(Rest, AccNew, Length).
 
 laatste([Last], Last).
-laatste([Head|Rest], Last) :-
+laatste([_Head|Rest], Last) :-
     laatste(Rest, Last).
+
+naast([A|[B|_Rest]], A, B).
+naast([A|[B|_Rest]], B, A).
+naast([_X|Y], A, B) :-
+    naast(Y, A, B).
