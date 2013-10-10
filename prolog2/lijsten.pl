@@ -9,3 +9,7 @@ listlength([], Acc, Acc).
 listlength([_|Rest], Acc, Length) :-
     AccNew is Acc + 1,
     listlength(Rest, AccNew, Length).
+
+laatste([Last], Last).
+laatste([Head|Rest], Last) :-
+    laatste(Rest, Last).
