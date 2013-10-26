@@ -2,9 +2,8 @@
 
 eval(int(I), _, I).
 
-eval(var(A), [paar(A,X)|_], X).
-eval(var(A), [_|[paar(A,X)|_]], X).
-eval(var(A), [[_|_]|[paar(A,X)|_]], X).
+eval(var(A), VarList, X) :-
+    member(paar(A,X), VarList).
 
 eval(plus(E1,E2), VarList, Waarde) :-
     eval(E1, VarList, W1),
