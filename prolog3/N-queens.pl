@@ -15,6 +15,7 @@
 %    between(1, Q2, N), \+ cover(Q1, Q2),
 %    between(1, Q3, N), \+ cover(Q1, Q2, Q3),
 
+check_diag(_, [], _).
 check_diag(H, [Th|Tail], D) :-
     Hrising is H + D,
     Hfalling is H - D,
@@ -23,6 +24,7 @@ check_diag(H, [Th|Tail], D) :-
     Dn is D + 1,
     check_diag(H, Tail, Dn).
 
+check([]).
 check([H|RestSol]) :-
     check_diag(H, RestSol, 1),
     check(RestSol).
