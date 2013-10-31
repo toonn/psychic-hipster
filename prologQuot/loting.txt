@@ -1,0 +1,52 @@
+
+% Opdracht 1: automatisch loten
+
+?- loting(Loting).
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, tsjechie], [oekraine, rusland, zweden, ierland]] ;
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, ierland], [oekraine, rusland, zweden, tsjechie]] ;
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, zweden, tsjechie], [oekraine, rusland, portugal, ierland]] ;
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, zweden, ierland], [oekraine, rusland, portugal, tsjechie]] ;
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, rusland, portugal, tsjechie], [oekraine, engeland, zweden, ierland]] ;
+...
+
+
+?- time(loting(Loting)).
+% 137 inferences, 0.000 CPU in 0.000 seconds (85% CPU, 3468530 Lips)
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, tsjechie], [oekraine, rusland, zweden, ierland]] ;
+% 20 inferences, 0.000 CPU in 0.000 seconds (67% CPU, 1003613 Lips)
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, ierland], [oekraine, rusland, zweden, tsjechie]] ;
+% 23 inferences, 0.000 CPU in 0.000 seconds (84% CPU, 1109503 Lips)
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, zweden, tsjechie], [oekraine, rusland, portugal, ierland]] ;
+% 20 inferences, 0.000 CPU in 0.000 seconds (82% CPU, 1004117 Lips)
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, zweden, ierland], [oekraine, rusland, portugal, tsjechie]] ;
+% 26 inferences, 0.000 CPU in 0.000 seconds (84% CPU, 1144870 Lips)
+Loting = [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, rusland, portugal, tsjechie], [oekraine, engeland, zweden, ierland]] ;
+...
+
+
+% Berekent het aantal mogelijke lotingen.
+?- findall(Loting, loting(Loting), Lotingen), length(Lotingen, Aantal).
+Lotingen = [[[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, tsjechie], [oekraine, rusland, zweden, ierland]], [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, portugal, ierland], [oekraine, rusland, zweden|...]], [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland, frankrijk], [spanje, engeland, zweden|...], [oekraine, rusland|...]], [[polen, duitsland, kroatie, denemarken], [nederland, italie, griekenland|...], [spanje, engeland|...], [oekraine|...]], [[polen, duitsland, kroatie|...], [nederland, italie|...], [spanje|...], [...|...]], [[polen, duitsland|...], [nederland|...], [...|...]|...], [[polen|...], [...|...]|...], [[...|...]|...], [...|...]|...],
+Aantal = 13824.
+
+
+
+% Opdracht 2: spannend loten
+
+?- spannendste_loting(Loting, Spannendheid).
+Loting = [[polen, engeland, portugal, tsjechie], [nederland, duitsland, kroatie, frankrijk], [spanje, italie, griekenland, denemarken], [oekraine, rusland, zweden, ierland]],
+Spannendheid = 126.168.
+
+
+?- time(spannendste_loting(Loting, Spannendheid)).
+% 3,474,420 inferences, 0.362 CPU in 0.363 seconds (100% CPU, 9595493 Lips)
+Loting = [[polen, engeland, portugal, tsjechie], [nederland, duitsland, kroatie, frankrijk], [spanje, italie, griekenland, denemarken], [oekraine, rusland, zweden, ierland]],
+Spannendheid = 126.168.
+
+
+% Berekent de spannendheid van de uiteindelijke loting van het Europees kampioenschap 2012.
+?- spannendheid([[polen, rusland, griekenland, tsjechie], [nederland, duitsland, portugal, denemarken], [spanje, italie, kroatie, ierland], [oekraine, engeland, zweden, frankrijk]], Spannendheid).
+Spannendheid = 131.508.
+
+
+
