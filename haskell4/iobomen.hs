@@ -7,6 +7,8 @@ instance Show a => Show (Tree a) where
     show tree = intercalate "\n" (treeShow tree) where
         treeShow :: (Show a) => Tree a -> [String]
         treeShow Nil = []
+        treeShow (Node val left Nil) =
+                        concat [[show val], treeShowH "`" left]
         treeShow (Node val left right) =
             concat [[show val], treeShowH "|" left, treeShowH "`" right]
     
