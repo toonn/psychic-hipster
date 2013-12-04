@@ -35,3 +35,12 @@ nietintails listoflists x =
 
 -- gegeven
 data GJ = Za | Zo | Ma | Di deriving (Eq,Ord,Show)
+
+-- Deel 2
+isOnoplosbaar :: Ord a => [[a]] -> Bool
+isOnoplosbaar [] = False
+isOnoplosbaar listoflists
+    | zekervoor listoflists == [] = True
+    | otherwise = isOnoplosbaar (verwijder nextel listoflists)
+        where nextel = head $ sort $ zekervoor listoflists
+
