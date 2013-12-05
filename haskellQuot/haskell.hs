@@ -18,6 +18,13 @@ allePakketten = map (fst)
 
 -- Een pakket is stuurbaar als alle pakketten waar het op wacht ook wachten
 -- op het pakket (triviaal voldaan voor pakketten die nergens op wachten)
+-- De eerste map maakt een lijst van lijsten van pakketten waar de pakketten
+-- waarop p wacht wachten
+-- De tweede (buitenste) map controleert of elk van de pakketten waarop p
+-- wacht ook wachten op p
+-- De foldr controleert of alle pakketten waarop p wacht wachten op p
+-- (foldr (&&) True ipv foldr1 (&&)) omdat de lijst na de maps leeg kan zijn,
+-- bvb. wanneer p op geen enkel pakket wacht
 stuurbaarPakket :: Eq a => [(a,[a])] -> a-> Bool
 stuurbaarPakket pakketten p =
     foldr (&&) True (map (elem p)
@@ -29,7 +36,7 @@ waarHetOpWacht :: Eq a => a -> [(a,[a])] -> [a]
 waarHetOpWacht p pakketten =
     snd (head (filter (\tup -> fst tup == p) pakketten))
     -- filter geeft hier een lijst met 1 element in dus ipv head kan ook
-    -- (filter ...)!!0
+    -- (filter ...)!!0 maar dit bied geen voordeel
 
 
 -- Geeft de lijst van pakketten waar pakket p (rechtstreeks of onrechtstreeks)
@@ -40,6 +47,8 @@ wachtOp p pakketten = wachtOpHelp pakketten [] p
 -- Geeft de lijst van pakketten waar pakket p op wacht
 -- maar bezoekt geen pakketten die in "gezien" zitten
 -- Zo onstaat er geen oneindige lus
+-- Dit is een hulpfunctie voor wachtOp zodat het extra argument "gezien" niet
+-- nodig is
 wachtOpHelp pakketten gezien p
     | waarHetOpWacht p pakketten == [] = []
     | otherwise =
