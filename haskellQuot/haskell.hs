@@ -28,22 +28,26 @@ stuurbaarPakket pakketten p =
 waarHetOpWacht :: Eq a => a -> [(a,[a])] -> [a]
 waarHetOpWacht p pakketten =
     snd (head (filter (\tup -> fst tup == p) pakketten))
+    -- filter geeft hier een lijst met 1 element in dus ipv head kan ook
+    -- (filter ...)!!0
 
 
 -- Geeft de lijst van pakketten waar pakket p (rechtstreeks of onrechtstreeks)
 -- op wacht
 wachtOp :: Eq a => a -> [(a,[a])] -> [a]
-wachtOp p pakketten = wachtOpTot pakketten [] p
+wachtOp p pakketten = wachtOpHelp pakketten [] p
 
 -- Geeft de lijst van pakketten waar pakket p op wacht
 -- maar bezoekt geen pakketten die in "gezien" zitten
 -- Zo onstaat er geen oneindige lus
-wachtOpTot pakketten gezien p
+wachtOpHelp pakketten gezien p
     | waarHetOpWacht p pakketten == [] = []
     | otherwise =
-        ps ++ concat (map (wachtOpTot pakketten (p:gezien)) ps)
+        ps ++ concat (map (wachtOpHelp pakketten (p:gezien)) ps)
             where ps = filter (not . (flip elem gezien))
                                 (waarHetOpWacht p pakketten)
+                  -- Houdt enkel rekening met elementen die niet gezien
+                  -- (not ...) zijn
 
 -- Opdracht 2: schrijf een functie "stuur"
 
@@ -57,9 +61,8 @@ stuur pakketten = eersten:(stuur (verwijderPakketten eersten pakketten))
 -- Verwijdert alle pakketten ps uit de lijst van pakketten
 verwijderPakketten :: Eq a => [a] -> [(a,[a])] -> [(a,[a])]
 verwijderPakketten [] pakketten = pakketten
-verwijderPakketten teVerw pakketten =
-    verwijderPakketten (tail teVerw)
-                       (verwijderPakket (head teVerw) pakketten)
+verwijderPakketten (x:xs) pakketten =
+    verwijderPakketten xs (verwijderPakket x pakketten)
 
 -- Verwijdert pakket p uit de lijst van pakketten
 -- (dus ook uit de lijstjes van pakketten waarop gewacht wordt)
