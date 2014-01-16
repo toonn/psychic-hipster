@@ -14,17 +14,19 @@ bwt_ :: String -> String
 bwt_ tekst = map last $ sort $ rotations tekst
     
 bwt :: String -> String
-bwt tekst = bwt_  ('^':(tekst ++ "|"))
+-- bwt tekst = bwt_  ('^':(tekst ++ "|"))
+bwt = bwt2 '^' '|'
 
-unbwt_ :: String -> [String] -> String
-unbwt_ tekst matrix
-    | length (head matrix) == length tekst =
-        head $ filter (\x -> head x == '^') matrix
-    | otherwise =
-        unbwt_ tekst $ sort [(tekst!!i):(matrix!!i) | i <- [0..length matrix-1]]
+-- unbwt_ :: String -> [String] -> String
+-- unbwt_ tekst matrix
+--     | length (head matrix) == length tekst =
+--         head $ filter (\x -> head x == '^') matrix
+--     | otherwise =
+--         unbwt_ tekst $ sort [(tekst!!i):(matrix!!i) | i <- [0..length matrix-1]]
 
 unbwt :: String -> String
-unbwt tekst = tail $ init $ unbwt_ tekst ["" | i <- [1..length tekst]]
+-- unbwt tekst = tail $ init $ unbwt_ tekst ["" | i <- [1..length tekst]]
+unbwt = unbwt2 '^' '|'
 
 bwt2 :: Char -> Char -> String -> String
 bwt2 begin einde tekst = bwt_ $ begin:(tekst ++ [einde])
