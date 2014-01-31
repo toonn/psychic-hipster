@@ -11,6 +11,7 @@ kost_([], Acc, Acc).
 kost_([Count-_|Rest], Acc, Kost) :-
     NewAcc is Count + Acc,
     kost_(Rest, NewAcc, Kost).
+kost([], 0).
 kost([Count-_|Rest], Kost) :-
     kost_(Rest, Count, Kost).
 
@@ -66,8 +67,7 @@ groepen(Kars, PalGroepen) :-
     groep_kar(PosGroepen, PalGroepen).
 
 splits(Paren, Indices, Kars) :-
-    sort(Paren, Sorted),
-    pairs_keys_values(Sorted, Indices, Kars).
+    pairs_keys_values(Paren, Indices, Kars).
 
 onsplits(Paren, Indices, Kars) :-
     pairs_keys_values(Paren, Indices, Kars).
@@ -89,10 +89,10 @@ kosten_som(Delen, Kost) :-
 palindroom(Woord, Kost, Palindroom) :-
     findall(Pos-Kar, nth1(Pos, Woord, Kar), Kars),
     groepen(Kars, PalGroepen),
-    findall(PalGroep-Kost,
+    findall(PalGroep-KostGroep,
             (member(X, PalGroepen),
-            splits(X, Indices, Woord),
-            algelijk(Woord, Kost, Pal),
+            splits(X, Indices, PalKars),
+            algelijk(PalKars, KostGroep, Pal),
             onsplits(PalGroep, Indices, Pal)),
             PalDelen),
     kosten_som(PalDelen, Kost),
